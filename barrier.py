@@ -1,3 +1,9 @@
+# Author: Andy Duong
+# Email: aqduong@csu.fullerton.edu
+# Class: CPSC 386-02
+# Project 1: Space Invaders
+# This File: barrier.py handles the barriers in game
+
 import pygame
 from PIL import Image
 from pygame.sprite import Sprite

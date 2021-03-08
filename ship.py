@@ -1,3 +1,9 @@
+# Author: Andy Duong
+# Email: aqduong@csu.fullerton.edu
+# Class: CPSC 386-02
+# Project 1: Space Invaders
+# This file: ship.py handles the ship (player)
+
 import pygame
 from pygame.sprite import Sprite
 import SpriteSheet

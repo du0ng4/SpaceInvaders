@@ -1,3 +1,9 @@
+# Author: Andy Duong
+# Email: aqduong@csu.fullerton.edu
+# Class: CPSC 386-02
+# Project 1: Space Invaders
+# This File: projectile.py handles all projectiles in game
+
 import pygame as pg
 from ship import Ship
 from alien import Alien

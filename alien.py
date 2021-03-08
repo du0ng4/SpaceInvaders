@@ -1,3 +1,9 @@
+# Author: Andy Duong
+# Email: aqduong@csu.fullerton.edu
+# Class: CPSC 386-02
+# Project 1: Space Invaders
+# This File: alien.py Handles the aliens in game
+
 import pygame as pg
 from pygame.sprite import Sprite
 from timer import Timer

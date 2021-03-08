@@ -1,3 +1,9 @@
+# Author: Andy Duong
+# Email: aqduong@csu.fullerton.edu
+# Class: CPSC 386-02
+# Project 1: Space Invaders
+# This File: game.py main driver for program
+
 import sys
 from alien import *
 from projectile import *
@@ -6,6 +12,7 @@ from barrier import *
 from ufo import *
 from scoreboard import *
 from other_functions import *
+from pygame.locals import *
 settings = Settings()
 
 
@@ -176,8 +183,71 @@ class SpaceInvaders:
                             start = False
                             self.run_game()
                         if high_rect.collidepoint(x, y):
-                            high_score_screen(self)
+                            self.high_score_screen()
                             start = False
+
+    def game_over_screen(self):
+        sound = pg.mixer.Sound("assets/sounds/oh_yeah.wav")
+        if len(self.ship_group.sprites()) == 0:
+            sound = pg.mixer.Sound("assets/sounds/im_a_clown.wav")
+        sound.play()
+        game_over = True
+        self.screen.fill(settings.bg_color)
+        result = 'Score: ' + str(self.scoreboard.score)
+        pg.mixer.music.stop()
+        font = pg.font.SysFont('Ariel', 100, True)
+        text = font.render(result, True, (255, 0, 0))
+        rect = text.get_rect()
+        rect.centerx, rect.centery = settings.screen_width / 2, 250
+        self.screen.blit(text, rect)
+
+        restart = pg.image.load("assets/images/restart.png")
+        re_rect = restart.get_rect()
+        re_rect.x, re_rect.y = settings.screen_width / 2 - 100, settings.screen_height / 3 + 150
+        self.screen.blit(restart, re_rect)
+
+        pg.display.update()
+
+        write_high_score(self.high_scores, self.scoreboard.score)
+
+        while game_over:
+            x, y = pg.mouse.get_pos()
+            for event in pg.event.get():
+                if event.type == QUIT:
+                    pg.quit()
+                    exit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        if re_rect.collidepoint(x, y):
+                            game_over = False
+                            self.reset()
+
+    def high_score_screen(self):
+        on_menu = True
+        self.screen.fill(settings.bg_color)
+        font = pg.font.SysFont('Ariel', 100, False)
+        text = font.render('HIGH SCORES', True, (255, 0, 0))
+        rect = text.get_rect()
+        rect.centerx, rect.centery = settings.screen_width / 2, 100
+        self.screen.blit(text, rect)
+
+        font = pg.font.SysFont('Ariel', 40, False)
+        for i in self.high_scores:
+            text = font.render(str(i), True, (255, 255, 255))
+            rect = text.get_rect()
+            rect.centerx, rect.centery = settings.screen_width / 2, self.high_scores.index(i) * 32 + 200
+            self.screen.blit(text, rect)
+
+        pg.display.update()
+        while on_menu:
+            for event in pg.event.get():
+                if event.type == QUIT:
+                    pg.quit()
+                    exit()
+                if event.type == MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        on_menu = False
+                        self.start_screen()
 
 
 def main():
